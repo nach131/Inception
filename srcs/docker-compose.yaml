@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   mariadb:
-    command: /bin/sh -c "apk update && apk add mariadb mariadb-client && mkdir -p /var/lib/mysql && chown -R mysql:mysql /var/lib/mysql && mysql_install_db --user=mysql --ldata=/var/lib/mysql && mysqld_safe"
+    # command: /bin/sh -c "apk update && apk add mariadb mariadb-client && mkdir -p /var/lib/mysql && chown -R mysql:mysql /var/lib/mysql && mysql_install_db --user=mysql --ldata=/var/lib/mysql && mysqld_safe"
     build:
       context: ./requirements/mariadb/
       dockerfile: Dockerfile
@@ -38,7 +38,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - $HOME/data/nasa:/usr/share/nginx/html/nasa
+      - $HOME/data/nasa:/var/www/nasa
+      - $HOME/data/wordpress:/var/www/wp
+
     networks:
       - tokemo
 
@@ -58,42 +60,4 @@ services:
 networks:
   tokemo:
     driver: bridge
-
-  # wp:
-  #   build:
-  #     context: ./requirements/wordpress
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     WORDPRESS_DB_HOST: mariadb
-  #     WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
-  #     WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-  #     WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-  #   ports:
-  #     - "8080:80"
-  #   volumes:
-  #     - $HOME/data/wordpress/:/var/www/html
-  #   networks:
-  #     - tokemo
-
-
-  # wordpress:
-  #   image: wordpress
-  #   # image: nmota-bu_wp:0.0.2
-  #   # build:  
-  #   #   context: ./requirements/wordpress
-  #   #   dockerfile: Dockerfile
-  #   environment:
-  #     WORDPRESS_DB_HOST: mariadb
-  #     WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
-  #     WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-  #     WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-  #   volumes:
-  #     # - ./tools/db_init.sh:/docker-entrypoint-initdb.d/db_init.sh
-  #     - ../../data/wordpress:/var/www/html
-  #   ports:
-  #     - "8080:80"
-  #   depends_on:
-  #     - mariadb
-  #   networks:
-  #     - tokemo
 
