@@ -1,12 +1,31 @@
-FROM alpine:3.18.6
+FROM php:8.1-fpm-alpine
 
-RUN mkdir -p /var/www/html
+LABEL version="0.2"
+LABEL description="Wordpress and php"
 
-# RUN apk update &&\
-# 	apk upgrade
+# persistent dependencies
+RUN set -eux; \
+	apk add --no-cache \
+	# in theory, docker-entrypoint.sh is POSIX-compliant, but priority is a working, consistent image
+	bash \
+	# Ghostscript is required for rendering PDF previews
+	ghostscript \
+	# Alpine package for "imagemagick" contains ~120 .so files, see: https://github.com/docker-library/wordpress/pull/497
+	imagemagick \
+	;
 
-EXPOSE  8080
+# # Crear un directorio para almacenar los datos de WordPress
+# RUN mkdir -p /var/www/html
 
-COPY ./tools/wp_init.sh /usr/local/bin/wp_init.sh
+# # Copiar WordPress al directorio de trabajo
+# COPY wordpress /var/www/html
 
-CMD echo "desde Makefile nach"
+WORKDIR /var/www/html
+# Establecer permisos adecuados
+RUN chown -R nobody:nogroup .
+
+# Exponer el puerto 9000 para PHP-FPM
+EXPOSE 9000
+
+# Iniciar PHP-FPM
+CMD ["php-fpm"]

@@ -1,21 +1,15 @@
 version: "3.7"
 
-networks:
-  tokemo:
-    name: tokemo
-    driver: bridge
-
 services:
   mariadb:
+    command: /bin/sh -c "apk update && apk add mariadb mariadb-client && mkdir -p /var/lib/mysql && chown -R mysql:mysql /var/lib/mysql && mysql_install_db --user=mysql --ldata=/var/lib/mysql && mysqld_safe"
     build:
       context: ./requirements/mariadb/
       dockerfile: Dockerfile
+    container_name: db
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    env_file:
+     - .env
     ports:
       - "3306:3306"
     volumes:
@@ -32,18 +26,38 @@ services:
           "root",
           "-p${MYSQL_ROOT_PASSWORD}"
         ]
+        
+
   nginx:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
+    container_name: web
     restart: always
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - $HOME/data/nasa/:/usr/share/nginx/html/nasa
+      - $HOME/data/nasa:/usr/share/nginx/html/nasa
     networks:
       - tokemo
+
+  wordpress:
+      container_name: wp
+      build: ./requirements/wordpress
+      depends_on:
+      - mariadb
+      volumes:
+      - $HOME/data/wordpress:/var/www/html
+      restart: always
+      networks:
+      - tokemo
+      env_file:
+      - .env
+
+networks:
+  tokemo:
+    driver: bridge
 
   # wp:
   #   build:
@@ -57,7 +71,7 @@ services:
   #   ports:
   #     - "8080:80"
   #   volumes:
-  #     - ../../data/wordpress/:/var/www/html
+  #     - $HOME/data/wordpress/:/var/www/html
   #   networks:
   #     - tokemo
 
