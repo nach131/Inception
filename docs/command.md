@@ -36,7 +36,6 @@ MODIFICAR EL /etc/hosts
 
 docker run --name some-mariadb -e MYSQL_ROOT_PASSWORD=klingon -d mariadb
 
-
 --network srcs_tokemo \
 
 docker run -d \
@@ -55,3 +54,19 @@ docker run -d \
 -e MYSQL_ROOT_PASSWORD=root \
 -p 8080:80 \
 phpmyadmin/phpmyadmin
+
+
+
+=========
+en mariadb
+
+mysql -u root -p
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'phpmyadm.srcs_tokemo' IDENTIFIED BY 'tu_contraseña' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'wp.srcs_tokemo' IDENTIFIED BY 'tu_contraseña' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'pedro'@'wp.srcs_tokemo' IDENTIFIED BY 'pedropsw' WITH GRANT OPTION;
+
+GRANT ALL PRIVILEGES ON wordpress.* TO 'pedro'@'wp.srcs_tokemo' IDENTIFIED BY 'pedropsw';
+
+
+FLUSH PRIVILEGES;

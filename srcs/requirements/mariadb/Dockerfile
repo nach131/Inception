@@ -1,5 +1,5 @@
 FROM alpine:3.18.6
-# FROM alpine:3.16
+
 LABEL version="1.0"
 LABEL description="MariaDB Server"
 
@@ -14,6 +14,7 @@ RUN apk add --no-cache mariadb mariadb-client && \
 
 EXPOSE 3306
 
+COPY ./conf/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
 COPY ./conf/my.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 COPY ./tools/wp_db.sh /usr/local/bin/wp_db.sh
 
