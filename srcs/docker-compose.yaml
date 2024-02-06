@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   mariadb:
-    # command: /bin/sh -c "apk update && apk add mariadb mariadb-client && mkdir -p /var/lib/mysql && chown -R mysql:mysql /var/lib/mysql && mysql_install_db --user=mysql --ldata=/var/lib/mysql && mysqld_safe"
+    command: /bin/sh -c "apk update && apk add mariadb mariadb-client && mkdir -p /var/lib/mysql && chown -R mysql:mysql /var/lib/mysql && mysql_install_db --user=mysql --ldata=/var/lib/mysql && mysqld_safe"
     build:
       context: ./requirements/mariadb/
       dockerfile: Dockerfile
@@ -13,7 +13,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - $HOME/data/mysql:/var/lib/mysql
+      - dbdata:/var/lib/mysql
     networks:
       - tokemo
     healthcheck:
@@ -26,7 +26,6 @@ services:
           "root",
           "-p${MYSQL_ROOT_PASSWORD}"
         ]
-        
 
   nginx:
     build:
@@ -35,12 +34,10 @@ services:
     container_name: web
     restart: always
     ports:
-      - "80:80"
       - "443:443"
     volumes:
-      - $HOME/data/nasa:/var/www/nasa
-      - $HOME/data/wordpress:/var/www/wp
-
+      - nasa:/var/www/nasa
+      - wp_files:/var/www/wp
     networks:
       - tokemo
 
@@ -50,14 +47,49 @@ services:
       depends_on:
       - mariadb
       volumes:
-      - $HOME/data/wordpress:/var/www/html
+      - wp_files:/var/www/wp
       restart: always
+      ports:
+      - "9000:9000"
       networks:
       - tokemo
       env_file:
       - .env
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadminc
+    ports:
+      - "8080:80"
+    networks:
+      - tokemo
+    env_file:
+      - .env
+
+volumes:
+    dbdata:
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/nmota-bu/data/mysql
+            o: bind
+
+    wp_files:
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/nmota-bu/data/wordpress
+            o: bind
+
+    nasa:
+      driver: local
+      driver_opts:
+        type: none
+        device: /home/nmota-bu/data/nasa
+        o: bind
+
 networks:
   tokemo:
     driver: bridge
+
 
