@@ -18,8 +18,6 @@ COPY ./conf/nasa.nmota-bu.42.fr /etc/nginx/conf.d/nasa.nmota-bu.42.fr.conf
 COPY ./conf/nginx.crt /etc/ssl/certs/nginx.crt
 COPY ./conf/nginx.key /etc/ssl/private/nginx.key
 
-EXPOSE 443
-
 WORKDIR /var/www
 
 # Comando para ejecutar NGINX en primer plano

@@ -12,7 +12,7 @@ RUN apk add --no-cache mariadb mariadb-client && \
 	chown -R mysql:mysql /var/lib/mysql && \
 	mysql_install_db --user=mysql --ldata=/var/lib/mysql
 
-EXPOSE 3306
+# EXPOSE 3306
 
 COPY ./conf/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
 COPY ./conf/my.cnf /etc/mysql/mariadb.conf.d/50-server.cnf

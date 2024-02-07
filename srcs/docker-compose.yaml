@@ -88,21 +88,21 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: /home/nmota-bu/data/mysql
+            device: ${TOMA}/data/mysql
             o: bind
 
     wp_files:
         driver: local
         driver_opts:
             type: none
-            device: /home/nmota-bu/data/wordpress
+            device: ${TOMA}/data/wordpress
             o: bind
 
     nasa:
       driver: local
       driver_opts:
         type: none
-        device: /home/nmota-bu/data/nasa
+        device: ${TOMA}/data/nasa
         o: bind
 
 networks:
