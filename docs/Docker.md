@@ -19,6 +19,12 @@
 	sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 	==========
+# Docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+
+	==========
 https://docs.docker.com/engine/install/linux-postinstall/
 
 sudo groupadd docker
@@ -27,12 +33,12 @@ sudo usermod -aG docker $USER
 montar carpeta
 sudo vmhgfs-fuse .host:/nombre_de_la_carpeta_compartida /mnt/shared_folder -o subtype=vmhgfs-fuse,allow_other
 
-caber ip
+saber ip
 
 ip addr show
 
 VMware tools
-$ sudo apt-get install git
-$ git clone https://github.com/rasa/vmware-tools-patches.git
-$ cd vmware-tools-patches
-$ sudo ./patched-open-vm-tools.sh
+sudo apt-get install git
+git clone https://github.com/rasa/vmware-tools-patches.git
+cd vmware-tools-patches
+sudo ./patched-open-vm-tools.sh
