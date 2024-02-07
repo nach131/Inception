@@ -91,48 +91,15 @@ RUN { \
 	echo 'html_errors = Off'; \
 	} > /usr/local/etc/php/conf.d/error-logging.ini
 
-# RUN set -eux; \
-# 	version='6.4.3'; \
-# 	sha1='ee3bc3a73ab3cfa535c46f111eb641b3467fa44e'; \
-# 	\
-# 	curl -o wordpress.tar.gz -fL "https://wordpress.org/wordpress-$version.tar.gz"; \
-# 	echo "$sha1 *wordpress.tar.gz" | sha1sum -c -; \
-# 	\
-# 	# upstream tarballs include ./wordpress/ so this gives us /var/www/wp
-# 	tar -xzf wordpress.tar.gz -C /usr/src/; \
-# 	rm wordpress.tar.gz; \
-# 	\
-# 	# https://wordpress.org/support/article/htaccess/
-# 	[ ! -e /var/www/wp/.htaccess ]; \
-# 	{ \
-# 	echo '# BEGIN WordPress'; \
-# 	echo ''; \
-# 	echo 'RewriteEngine On'; \
-# 	echo 'RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]'; \
-# 	echo 'RewriteBase /'; \
-# 	echo 'RewriteRule ^index\.php$ - [L]'; \
-# 	echo 'RewriteCond %{REQUEST_FILENAME} !-f'; \
-# 	echo 'RewriteCond %{REQUEST_FILENAME} !-d'; \
-# 	echo 'RewriteRule . /index.php [L]'; \
-# 	echo ''; \
-# 	echo '# END WordPress'; \
-# 	} > /var/www/wp/.htaccess; \
-# 	\
-# 	# pre-create wp-content (and single-level children) for folks who want to bind-mount themes, etc so permissions are pre-created properly instead of root:root
-# 	# wp-content/cache: https://github.com/docker-library/wordpress/issues/534#issuecomment-705733507
-# 	mkdir wp-content; \
-# 	for dir in /var/www/wp/wp-content/*/ cache; do \
-# 	dir="$(basename "${dir%/}")"; \
-# 	mkdir "wp-content/$dir"; \
-# 	done; \
+RUN apk add redis
+
+COPY ./tools/start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
 
 WORKDIR /var/www/wp
 
-# RUN	chown -R www-data:www-data . \
-# 	chmod -R 1777 .
-
-# Exponer el puerto 9000 para PHP-FPM
 EXPOSE 9000
 
-# Iniciar PHP-FPM
+# Iniciar PHP-FPM and REDIS
+# CMD ["/usr/local/bin/start.sh"]
 CMD ["php-fpm"]

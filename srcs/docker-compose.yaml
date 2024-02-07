@@ -57,7 +57,6 @@ services:
       - .env
 
   phpmyadmin:
-    # image: phpmyadmin/phpmyadmin
     container_name: myadm
     build: ./requirements/bonus/phpmyadmin
     ports:
@@ -66,6 +65,23 @@ services:
       - tokemo
     env_file:
       - .env
+
+  vsftpd:
+    container_name: ftp
+    build: ./requirements/bonus/ftp
+    ports:
+      - "20:20"
+      - "21:21"
+      - "21100-21110:21100-21110"
+    environment:
+      FTP_USER: "ftpuser"
+      FTP_PASS: "ftppassword"
+      PASV_ADDRESS: "127.0.0.1"
+      PASV_MIN_PORT: "21100"
+      PASV_MAX_PORT: "21110"
+    volumes:
+      - wp_files:/home/vsftpd/ftpuser
+    restart: always
 
 volumes:
     dbdata:
