@@ -101,5 +101,5 @@ WORKDIR /var/www/wp
 EXPOSE 9000
 
 # Iniciar PHP-FPM and REDIS
-# CMD ["/usr/local/bin/start.sh"]
-CMD ["php-fpm"]
+CMD ["/usr/local/bin/start.sh"]
+# CMD ["php-fpm"]
