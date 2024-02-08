@@ -1,5 +1,4 @@
 
-
 SELECT User FROM mysql.user;
 show databases;
 
@@ -16,8 +15,6 @@ docker image prune
 
 docker-compose up --build
 
-SHOW VARIABLES LIKE "bind_address";
-SHOW VARIABLES LIKE "skip_networking";
 
 mysql
 
@@ -32,9 +29,6 @@ MODIFICAR EL /etc/hosts
 192.168.134.131 nmota-bu.42.fr
 192.168.134.131 nasa.nmota-bu.42.fr
 
-docker run --name some-mariadb -e MYSQL_ROOT_PASSWORD=klingon -d mariadb
-
---network srcs_tokemo \
 
 docker run -d \
 --rm \
@@ -60,5 +54,3 @@ docker run -d -v /my/data/directory:/home/vsftpd \
 -e PASV_ADDRESS=127.0.0.1 -e PASV_MIN_PORT=21100 -e PASV_MAX_PORT=21110 \
 --name vsftpd --restart=always fauria/vsftpd
 =========
-
-docker restart adminer
