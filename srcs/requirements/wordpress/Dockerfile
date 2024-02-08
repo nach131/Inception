@@ -1,6 +1,18 @@
 FROM php:8.1-fpm-alpine
+# FROM alpine:3.18.6
 
-# RUN docker-php-ext-install pdo pdo_mysql json openssl curl xml dom simplexml xmlwriter iconv   
+# RUN apk add --no-cache  \
+# 	docker-php-ext-install \
+# 	# pdo pdo_mysql \
+# 	# json \
+# 	# openssl \
+# 	# curl \
+# 	# xml \
+# 	# dom \
+# 	# simplexml \
+# 	# xmlwriter \
+# 	# iconv \
+# 	;
 
 # persistent dependencies
 RUN set -eux; \

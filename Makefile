@@ -1,8 +1,16 @@
+PATH = srcs/
+DOCKER = /usr/bin/docker
 
-build:
-	@docker build -t db:1.0.1 srcs/requirements/mariadb
+up:
+	@cd $(PATH) && $(DOCKER) compose up
 
-borrar
-docker rmi srcs_wordpress
-docker rmi srcs_nginx
-docker rmi srcs_mariadb
+down:
+	@cd $(PATH) && $(DOCKER) compose down
+
+images:
+	$(DOCKER) images
+
+clean:
+	$(DOCKER) images --format "{{.Repository}}" | awk '{print $1}' | xargs -I {} docker rmi {}
+
+.PHONY: up down clean images
