@@ -9,6 +9,7 @@ RUN apk update && apk add --no-cache nginx openssl
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/nmota-bu.42.fr /etc/nginx/conf.d/nmota-bu.42.fr.conf
 COPY ./conf/nasa.nmota-bu.42.fr /etc/nginx/conf.d/nasa.nmota-bu.42.fr.conf
+COPY ./conf/adminer.nmota-bu.42.fr /etc/nginx/conf.d/adminer.nmota-bu.42.fr.conf
 
 # Primera vez
 # COPY ./tools/cert.sh /usr/local/bin/cert.sh

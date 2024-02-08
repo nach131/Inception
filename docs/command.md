@@ -21,8 +21,6 @@ SHOW VARIABLES LIKE "skip_networking";
 
 mysql
 
-
-
 web
 saber los dominios activos
 sudo nginx -T | grep server_name
@@ -62,16 +60,5 @@ docker run -d -v /my/data/directory:/home/vsftpd \
 -e PASV_ADDRESS=127.0.0.1 -e PASV_MIN_PORT=21100 -e PASV_MAX_PORT=21110 \
 --name vsftpd --restart=always fauria/vsftpd
 =========
-en mariadb
 
-mysql -u root -p
-
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'phpmyadm.srcs_tokemo' IDENTIFIED BY 'tu_contraseña' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'wp.srcs_tokemo' IDENTIFIED BY 'tu_contraseña' WITH GRANT OPTION;
-GRANT ALL PRIVILEGES ON *.* TO 'pedro'@'wp.srcs_tokemo' IDENTIFIED BY 'pedropsw' WITH GRANT OPTION;
-
-GRANT ALL PRIVILEGES ON wordpress.* TO 'pedro'@'wp.srcs_tokemo' IDENTIFIED BY 'pedropsw';
-
-
-FLUSH PRIVILEGES;
-
+docker restart adminer
