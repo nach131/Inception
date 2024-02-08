@@ -78,8 +78,8 @@ services:
       - tokemo
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      ADMINER_DEFAULT_SERVER: mariadb
-      ADMINER_HOST: mariadb
+      ADMINER_DEFAULT_SERVER: ${PMA_HOST}
+      ADMINER_HOST: ${PMA_HOST}
 
   vsftpd:
     container_name: ftp
@@ -89,13 +89,13 @@ services:
       - "21:21"
       - "21100-21110:21100-21110"
     environment:
-      FTP_USER: "ftpuser"
-      FTP_PASS: "ftppassword"
+      FTP_USER: ${WORDPRESS_DB_USER}
+      FTP_PASS: ${WORDPRESS_DB_PASSWORD}
       PASV_ADDRESS: "127.0.0.1"
       PASV_MIN_PORT: "21100"
       PASV_MAX_PORT: "21110"
     volumes:
-      - wp_files:/home/vsftpd/ftpuser
+      - wp_files:/home/vsftpd/${WORDPRESS_DB_USER}
     restart: always
 
 volumes:

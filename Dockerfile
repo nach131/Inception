@@ -1,7 +1,5 @@
 FROM php:8.1-fpm-alpine
 
-# RUN docker-php-ext-install pdo pdo_mysql json openssl curl xml dom simplexml xmlwriter iconv   
-
 # persistent dependencies
 RUN set -eux; \
 	apk add --no-cache \
