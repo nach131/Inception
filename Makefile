@@ -17,6 +17,8 @@ images:
 	$(DOCKER) images
 
 clean:
-	$(DOCKER) images --format "{{.Repository}}" | awk '{print $1}' | xargs -I {} docker rmi {}
+	$(DOCKER) images --format "{{.Repository}}" | while read -r image; do $(DOCKER) rmi "$$image"; done
+# $(DOCKER) images --format "{{.Repository}}" | awk '{print $1}' | xargs -I {} docker rmi {}
+
 
 .PHONY: up upd down clean images ps

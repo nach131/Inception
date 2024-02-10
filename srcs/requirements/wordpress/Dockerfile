@@ -1,18 +1,5 @@
-FROM php:8.1-fpm-alpine
-# FROM alpine:3.18.6
 
-# RUN apk add --no-cache  \
-# 	docker-php-ext-install \
-# 	# pdo pdo_mysql \
-# 	# json \
-# 	# openssl \
-# 	# curl \
-# 	# xml \
-# 	# dom \
-# 	# simplexml \
-# 	# xmlwriter \
-# 	# iconv \
-# 	;
+FROM php:8.1-fpm-alpine
 
 # persistent dependencies
 RUN set -eux; \
@@ -104,6 +91,7 @@ RUN { \
 	echo 'ignore_repeated_source = Off'; \
 	echo 'html_errors = Off'; \
 	} > /usr/local/etc/php/conf.d/error-logging.ini
+
 
 RUN apk add redis
 
