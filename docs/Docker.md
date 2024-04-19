@@ -36,6 +36,11 @@ https://docs.docker.com/engine/install/linux-postinstall/
 
 	sudo vmhgfs-fuse .host:/nombre_de_la_carpeta_compartida /mnt/shared_folder -o subtype=vmhgfs-fuse,allow_other
 
+## sudo nano /etc/fstab
+
+	.host:/nombre_de_la_carpeta_compartida /mnt/shared_folder fuse.vmhgfs-fuse subtype=vmhgfs-fuse,allow_other,defaults 0 0
+
+
 # saber ip
 
 	ip addr show
@@ -46,3 +51,4 @@ https://docs.docker.com/engine/install/linux-postinstall/
 	git clone https://github.com/rasa/vmware-tools-patches.git
 	cd vmware-tools-patches
 	sudo ./patched-open-vm-tools.sh
+	
