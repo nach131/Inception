@@ -54,3 +54,14 @@ docker run -d -v /my/data/directory:/home/vsftpd \
 -e PASV_ADDRESS=127.0.0.1 -e PASV_MIN_PORT=21100 -e PASV_MAX_PORT=21110 \
 --name vsftpd --restart=always fauria/vsftpd
 =========
+
+
+
+docker run -d \
+--rm \
+--name mongodb-container \
+-e MONGO_INITDB_ROOT_USERNAME=root \
+-e MONGO_INITDB_ROOT_PASSWORD=klingon \
+-p 27017:27017 \
+nertworkweb/mongodb-no-avx
+
